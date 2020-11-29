@@ -18,6 +18,6 @@ node {
                              Job URL: ${env.JOB_URL}
                                         Job Name: ${env.JOB_NAME}
     Thanks,
-    DevOps Team""", cc:'',from:'', replyTo:'', subject:"${env.JOB_NAME} Success", to:'P.Merdala@interia.pl'
+    DevOps Team""", cc:'',from:'P.Merdala@interia.pl', replyTo:'', subject:"${env.JOB_NAME} Success", to:'P.Merdala@interia.pl'
     }
 }
