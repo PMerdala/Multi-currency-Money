@@ -1,5 +1,5 @@
 node {
-    def mvn = tool (name: 'maven3', type: 'maven') + '/bin/mvn'
+    #def mvn = tool (name: 'maven3', type: 'maven') + '/bin/mvn'
 
     stage('SCM Checkout'){
         git branch: 'main',
@@ -8,7 +8,7 @@ node {
     }
 
     stage('Mvn Package'){
-        sh "${mvn} clean package deploy"
+        sh "mvn clean package deploy"
     }
 
     stage('Email Notification'){
