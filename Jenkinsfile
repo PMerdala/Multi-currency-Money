@@ -8,7 +8,7 @@ node {
     }
 
     stage('Mvn Package'){
-        tool ()name: 'openjdk-11', type: 'jdk')
+        tool (name: 'openjdk-11', type: 'jdk')
         sh "${mvn} clean package deploy"
     }
 
