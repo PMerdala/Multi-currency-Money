@@ -1,3 +1,7 @@
+#JetBraint
+.idea/
+tdd-by-example.iml
+
 # Compiled class file
 *.class
 
