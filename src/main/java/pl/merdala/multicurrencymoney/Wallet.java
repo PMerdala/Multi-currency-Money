@@ -12,9 +12,13 @@ public class Wallet {
         return fromCurrency+toCurrency;
     }
 
+    private boolean isTheSameCurrency(String fromCurrency, String toCurrency){
+        return fromCurrency != null && fromCurrency.equals(toCurrency);
+    }
+
     public Wallet addRate(String fromCurrency, String toCurrency,BigDecimal rate){
         String key = createKey(fromCurrency,toCurrency);
-        if (rates.get(key)==null){
+        if (!rates.containsKey(key)){
             rates.put(key,rate);
         }else{
             rates.replace(key,rate);
@@ -27,7 +31,7 @@ public class Wallet {
     }
 
     public BigDecimal rate(String fromCurrency, String toCurrency){
-        if (fromCurrency.equals(toCurrency))
+        if (isTheSameCurrency(fromCurrency,toCurrency))
             return BigDecimal.ONE;
         return rates.get(createKey(fromCurrency,toCurrency));
     }
