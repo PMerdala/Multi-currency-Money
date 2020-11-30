@@ -14,7 +14,7 @@ public class Franc extends Money {
     }
 
     public Franc(Money money){
-        this(money.amount);
+        super(money);
     }
 
     public Money times(int multiple){

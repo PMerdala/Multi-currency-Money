@@ -4,20 +4,24 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Money {
-    protected final BigDecimal amount;
-    protected final String currency;
+    private final BigDecimal amount;
+    private final String currencyCode;
 
-    public Money(BigDecimal amount, String currency) {
+    public String currency() {
+        return currencyCode;
+    }
+
+    public Money(BigDecimal amount, String currencyCode) {
         this.amount = amount;
-        this.currency = currency;
+        this.currencyCode = currencyCode;
     }
 
     public Money(Money money){
-        this(money.amount,money.currency);
+        this(money.amount,money.currency());
     }
 
-    public Money(int amount,String currency){
-        this(BigDecimal.valueOf(amount), currency);
+    public Money(int amount,String currencyCode){
+        this(BigDecimal.valueOf(amount), currencyCode);
     }
 
     @Override
@@ -25,12 +29,12 @@ public class Money {
         if (this == o) return true;
         if (o == null || !getClass().equals(o.getClass())) return false;
         Money money = (Money) o;
-        return Objects.equals(amount, money.amount) && Objects.equals(currency, money.currency);
+        return Objects.equals(amount, money.amount) && Objects.equals(currency(), money.currency());
     }
 
     @Override
     public String toString() {
-        return "" + amount + " " + currency;
+        return "" + amount + " " + currency();
     }
 
     @Override
@@ -39,15 +43,15 @@ public class Money {
     }
 
     public Money times(int multiple) {
-        return new Money(amount.multiply(BigDecimal.valueOf(multiple)), currency);
+        return new Money(amount.multiply(BigDecimal.valueOf(multiple)), currency());
     }
 
-    public static  Dollar dollar(int amount){
-        return new Dollar(amount);
+    public static  Money dollar(int amount){
+        return new Money(amount,"USD");
     }
 
-    public static Franc franc(int amount){
-        return new Franc(amount);
+    public static Money franc(int amount){
+        return new Money(amount,"CHF");
     }
 
 }
