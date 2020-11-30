@@ -10,7 +10,7 @@ node {
     stage('Mvn Package'){
         env.JAVA_HOME = tool (name: 'openjdk-11', type: 'jdk')
         env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-        sh "${mvn} clean package"
+        sh "${mvn} clean test package"
     }
 
     stage('Email Notification'){
