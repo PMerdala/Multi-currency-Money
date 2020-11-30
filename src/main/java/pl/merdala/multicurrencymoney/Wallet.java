@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class Wallet {
 
-    private final Map<String,BigDecimal> rates = new HashMap<>();
+    private final Map<Pair<String>,BigDecimal> rates = new HashMap<>();
 
-    private String createKey(String fromCurrency, String toCurrency){
-        return fromCurrency+toCurrency;
+    private Pair<String> createKey(String fromCurrency, String toCurrency){
+        return new Pair<String>(fromCurrency,toCurrency);
     }
 
     private boolean isTheSameCurrency(String fromCurrency, String toCurrency){
@@ -17,7 +17,7 @@ public class Wallet {
     }
 
     public Wallet addRate(String fromCurrency, String toCurrency,BigDecimal rate){
-        String key = createKey(fromCurrency,toCurrency);
+        Pair<String> key = createKey(fromCurrency,toCurrency);
         if (!rates.containsKey(key)){
             rates.put(key,rate);
         }else{
