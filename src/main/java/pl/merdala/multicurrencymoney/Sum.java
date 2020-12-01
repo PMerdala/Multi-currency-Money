@@ -1,17 +1,17 @@
 package pl.merdala.multicurrencymoney;
 
 class Sum implements Expression {
-    public final Expression augmend;
+    public final Expression augment;
     public final Expression augend;
 
-    private Sum(Expression augmend, Expression augend) {
-        this.augmend = augmend;
+    private Sum(Expression augment, Expression augend) {
+        this.augment = augment;
         this.augend = augend;
     }
 
     @Override
     public Money reduce(Wallet wallet, String toCurrency) {
-        return augmend.reduce(wallet,toCurrency).plus(augend.reduce(wallet,toCurrency)).reduce(wallet,toCurrency);
+        return augment.reduce(wallet,toCurrency).plus(augend.reduce(wallet,toCurrency)).reduce(wallet,toCurrency);
     }
 
     @Override
@@ -21,10 +21,10 @@ class Sum implements Expression {
 
     @Override
     public Expression times(int multiple) {
-        return Sum.create(augmend.times(multiple),augend.times(multiple));
+        return Sum.create(augment.times(multiple),augend.times(multiple));
     }
 
-    public static Sum create(Expression augmend, Expression augend){
-        return new Sum(augmend,augend);
+    public static Sum create(Expression augment, Expression augend){
+        return new Sum(augment,augend);
     }
 }
