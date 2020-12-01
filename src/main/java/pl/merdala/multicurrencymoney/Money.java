@@ -72,7 +72,7 @@ public class Money implements Expression {
                 return new Money(amount.add(money.amount), currency());
             }
         }
-        return new Sum(this, augend);
+        return Sum.create(this, augend);
     }
 
     @Override

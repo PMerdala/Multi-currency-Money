@@ -4,7 +4,7 @@ class Sum implements Expression {
     public final Expression augmend;
     public final Expression augend;
 
-    public Sum(Expression augmend, Expression augend) {
+    private Sum(Expression augmend, Expression augend) {
         this.augmend = augmend;
         this.augend = augend;
     }
@@ -16,11 +16,15 @@ class Sum implements Expression {
 
     @Override
     public Expression plus(Expression augend) {
-        return new Sum(this,augend);
+        return Sum.create(this,augend);
     }
 
     @Override
     public Expression times(int multiple) {
-        return new Sum(augmend.times(multiple),augend.times(multiple));
+        return Sum.create(augmend.times(multiple),augend.times(multiple));
+    }
+
+    public static Sum create(Expression augmend, Expression augend){
+        return new Sum(augmend,augend);
     }
 }
