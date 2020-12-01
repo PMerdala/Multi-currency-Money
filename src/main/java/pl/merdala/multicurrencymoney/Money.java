@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-public class Money implements Expression{
+public class Money implements Expression {
     private final BigDecimal amount;
     private final String currencyCode;
     private final int round;
@@ -40,7 +40,7 @@ public class Money implements Expression{
         return "" + amount + " " + currency();
     }
 
-    public boolean isTheSameCurrency(Money money){
+    public boolean isTheSameCurrency(Money money) {
         return Objects.equals(currency(), money.currency());
     }
 
@@ -65,15 +65,18 @@ public class Money implements Expression{
         return new Money(BigDecimal.valueOf(amount), "CHF");
     }
 
-    public Expression plus(Money addend) {
-        if (isTheSameCurrency(addend)) {
-            return new Money(amount.add(addend.amount),currency());
+    public Expression plus(Expression augend) {
+        if (augend instanceof Money) {
+            Money money = (Money) augend;
+            if (isTheSameCurrency(money)) {
+                return new Money(amount.add(money.amount), currency());
+            }
         }
-        return new Sum(this,addend);
+        return new Sum(this, augend);
     }
 
     @Override
-    public Money reduce(Wallet wallet,String toCurrency) {
-        return Money.money(amount.multiply(wallet.rate(currency(),toCurrency)),toCurrency);
+    public Money reduce(Wallet wallet, String toCurrency) {
+        return Money.money(amount.multiply(wallet.rate(currency(), toCurrency)), toCurrency);
     }
 }

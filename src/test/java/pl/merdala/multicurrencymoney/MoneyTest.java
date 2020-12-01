@@ -28,6 +28,7 @@ public class MoneyTest {
         Money ten = five.times(3);
         assertEquals(Money.franc(15), ten);
     }
+
     @Test
     void testFrancMultiplication2() {
         Money five = Money.franc(5);
@@ -63,28 +64,30 @@ public class MoneyTest {
 
     @Test
     void testEqualityDifferentConstructor() {
-        assertEquals(Money.dollar(5), Money.money(BigDecimal.valueOf(5.0),"USD"));
+        assertEquals(Money.dollar(5), Money.money(BigDecimal.valueOf(5.0), "USD"));
     }
 
     @Test
     void testEqualityRound() {
-        Money money = Money.money(BigDecimal.valueOf(4.9945),"USD");
-        assertEquals(Money.money(BigDecimal.valueOf(4.99),"USD"), money );
+        Money money = Money.money(BigDecimal.valueOf(4.9945), "USD");
+        assertEquals(Money.money(BigDecimal.valueOf(4.99), "USD"), money);
     }
+
     @Test
     void testEqualityRound2() {
-        Money money = Money.money(BigDecimal.valueOf(4.935),"USD");
-        assertEquals(Money.money(BigDecimal.valueOf(4.94),"USD"), money );
+        Money money = Money.money(BigDecimal.valueOf(4.935), "USD");
+        assertEquals(Money.money(BigDecimal.valueOf(4.94), "USD"), money);
     }
+
     @Test
     void testEqualityRound3() {
-        Money money = Money.money(BigDecimal.valueOf(4.945),"USD");
-        assertEquals(Money.money(BigDecimal.valueOf(4.94),"USD"), money );
+        Money money = Money.money(BigDecimal.valueOf(4.945), "USD");
+        assertEquals(Money.money(BigDecimal.valueOf(4.94), "USD"), money);
     }
 
     @Test
     void testEqualityDifferentConstructorIntCurrency() {
-        assertEquals(Money.dollar(5), Money.money(5,"USD"));
+        assertEquals(Money.dollar(5), Money.money(5, "USD"));
     }
 
     @Test
@@ -94,7 +97,7 @@ public class MoneyTest {
 
     @Test
     void testEqualityHashCodeDifferentConstructor() {
-        assertEquals(Money.dollar(5).hashCode(), Money.money(BigDecimal.valueOf(5.0),"USD").hashCode());
+        assertEquals(Money.dollar(5).hashCode(), Money.money(BigDecimal.valueOf(5.0), "USD").hashCode());
     }
 
     @Test
@@ -136,35 +139,50 @@ public class MoneyTest {
         Money dollar2 = Money.dollar(6);
         Expression sum = dollar1.plus(dollar2);
         Wallet wallet = Wallet.create();
-        Money reduced = wallet.reduce(sum,"USD");
-        assertEquals(Money.dollar(11),reduced);
+        Money reduced = wallet.reduce(sum, "USD");
+        assertEquals(Money.dollar(11), reduced);
     }
+
     @Test
     void testAdditionDifferentCurrency() {
         Money dollar = Money.dollar(5);
         Money franc = Money.franc(6);
         Expression sum = franc.plus(dollar);
         Wallet wallet = Wallet.create()
-                .addRate("USD","CHF",BigDecimal.valueOf(2));
-        Money reduced = wallet.reduce(sum,"CHF");
-        assertEquals(Money.franc(16),reduced);
+                .addRate("USD", "CHF", BigDecimal.valueOf(2));
+        Money reduced = wallet.reduce(sum, "CHF");
+        assertEquals(Money.franc(16), reduced);
     }
 
     @Test
     void testMoneyReduce() {
         Money dollar = Money.dollar(5);
         Wallet wallet = Wallet.create();
-        Money reduce = dollar.reduce(wallet,dollar.currency());
-        assertEquals(dollar,reduce);
+        Money reduce = dollar.reduce(wallet, dollar.currency());
+        assertEquals(dollar, reduce);
 
     }
+
     @Test
     void testMoneyReduceFrancReduceDollar() {
         Money dollar = Money.dollar(5);
         Wallet wallet = Wallet.create()
-                .addRate("USD","CHF",BigDecimal.valueOf(2));
-        Money reduce = dollar.reduce(wallet,"CHF");
-        assertEquals(Money.money(10,"CHF"),reduce);
+                .addRate("USD", "CHF", BigDecimal.valueOf(2));
+        Money reduce = dollar.reduce(wallet, "CHF");
+        assertEquals(Money.money(10, "CHF"), reduce);
 
+    }
+
+    @Test
+    void testMoneyAddManyTime() {
+        Money dollar = Money.dollar(5);
+        Wallet wallet = Wallet.create()
+                .addRate("USD", "CHF", BigDecimal.valueOf(2))
+                .addRate("USD", "PLN", BigDecimal.valueOf(4))
+                .addRate("CHF", "PLN", BigDecimal.valueOf(3));
+        Expression e = dollar.plus(Money.franc(10));
+        e = e.plus(Money.dollar(4));
+        Money reduce = e.reduce(wallet, "PLN");
+        assertEquals(Money.money(66, "PLN"), reduce);
     }
 }

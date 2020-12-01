@@ -13,4 +13,9 @@ class Sum implements Expression {
     public Money reduce(Wallet wallet, String toCurrency) {
         return augmend.reduce(wallet,toCurrency).plus(augend.reduce(wallet,toCurrency)).reduce(wallet,toCurrency);
     }
+
+    @Override
+    public Expression plus(Expression augend) {
+        return new Sum(this,augend);
+    }
 }
