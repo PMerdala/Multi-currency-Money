@@ -9,7 +9,7 @@ public class Wallet {
     private final Map<Pair<String>,BigDecimal> rates = new HashMap<>();
 
     private Pair<String> createKey(String fromCurrency, String toCurrency){
-        return new Pair<String>(fromCurrency,toCurrency);
+        return new Pair<>(fromCurrency,toCurrency);
     }
 
     private boolean isTheSameCurrency(String fromCurrency, String toCurrency){

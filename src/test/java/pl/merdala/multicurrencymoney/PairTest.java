@@ -8,31 +8,31 @@ class PairTest {
 
     @Test
     void testEquals() {
-        assertEquals(new Pair<String>("A","B"),new Pair<String>("A","B"));
+        assertEquals(new Pair<>("A","B"),new Pair<>("A","B"));
     }
 
     @Test
     void testNotEquals() {
-        assertNotEquals(new Pair<String>("A","B"),new Pair<String>("B","A"));
+        assertNotEquals(new Pair<>("A","B"),new Pair<>("B","A"));
     }
 
     @Test
     void testNotEqualsDifferentType() {
-        assertNotEquals(new Pair<Integer>(1,2),new Pair<String>("B","A"));
+        assertNotEquals(new Pair<>(1,2),new Pair<>("B","A"));
     }
 
     @Test
     void testToString() {
-        assertEquals("Pair<A,B>",new Pair<String>("A","B").toString());
+        assertEquals("Pair<A,B>",new Pair<>("A","B").toString());
     }
 
     @Test
     void testHashCode() {
-        assertEquals(new Pair<String>("A","B").hashCode(),new Pair<String>("A","B").hashCode());
+        assertEquals(new Pair<>("A","B").hashCode(),new Pair<>("A","B").hashCode());
     }
 
     @Test
     void testHashCodeNotEquals() {
-        assertNotEquals(new Pair<String>("A","B").hashCode(),new Pair<String>("B","A").hashCode());
+        assertNotEquals(new Pair<>("A","B").hashCode(),new Pair<>("B","A").hashCode());
     }
 }
