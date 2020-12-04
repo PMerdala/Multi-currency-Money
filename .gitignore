@@ -1,7 +1,12 @@
-#JetBraint
+#JetBriant
 .idea/
 tdd-by-example.iml
 target/
+
+#mvn
+.mvn/
+mvnw
+mvnw.cmd
 
 # Compiled class file
 *.class
